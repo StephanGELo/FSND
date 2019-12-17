@@ -12,7 +12,7 @@ class QuestionView extends Component {
       questions: [],
       page: 1,
       totalQuestions: 0,
-      categories: {},
+      categories: [],
       currentCategory: null,
     }
   }
@@ -58,9 +58,9 @@ class QuestionView extends Component {
     return pageNumbers;
   }
 
-  getByCategory= (id) => {
+  getByCategory= (id, page = 1) => {
     $.ajax({
-      url: `/categories/${id}/questions`, //TODO: update request URL
+      url: `/categories/${id}/questions?page=${page}`, //TODO: update request URL
       type: "GET",
       success: (result) => {
         this.setState({
@@ -76,9 +76,9 @@ class QuestionView extends Component {
     })
   }
 
-  submitSearch = (searchTerm) => {
+  submitSearch = (searchTerm, page=1) => {
     $.ajax({
-      url: `/questions`, //TODO: update request URL
+      url: `/questions?page=${page}`, //TODO: update request URL
       type: "POST",
       dataType: 'json',
       contentType: 'application/json',
@@ -125,10 +125,15 @@ class QuestionView extends Component {
         <div className="categories-list">
           <h2 onClick={() => {this.getQuestions()}}>Categories</h2>
           <ul>
-            {Object.keys(this.state.categories).map((id, ) => (
-              <li key={id} onClick={() => {this.getByCategory(id)}}>
-                {this.state.categories[id]}
-                <img className="category" src={`${this.state.categories[id]}.svg`}/>
+            {this.state.categories.map((c, ind) =>(
+              <li key = {c.id}
+                onClick={() => {this.getByCategory(c.id);}}>
+                {c.type}
+                <img
+                  alt="category icon"
+                  className="category"
+                  src={ `${this.state.categories[ind].type}.svg`}
+                />
               </li>
             ))}
           </ul>
