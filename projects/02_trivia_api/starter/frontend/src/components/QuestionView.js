@@ -47,7 +47,7 @@ class QuestionView extends Component {
   createPagination(){
     let pageNumbers = [];
     let maxPage = Math.ceil(this.state.totalQuestions / 10)
-    for (let i = 1; i <= maxPage; i++) {
+    for (let i = 1; i < maxPage; i++) {
       pageNumbers.push(
         <span
           key={i}
@@ -132,7 +132,7 @@ class QuestionView extends Component {
                 <img
                   alt="category icon"
                   className="category"
-                  src={ `${this.state.categories[ind].type}.svg`}
+                  src={ `${c.type}.svg`}
                 />
               </li>
             ))}
@@ -146,7 +146,9 @@ class QuestionView extends Component {
               key={q.id}
               question={q.question}
               answer={q.answer}
-              category={this.state.categories[q.category]} 
+              // category={this.state.categories[q.category]}
+              category={this.state.currentCategory} 
+              // category={cat}
               difficulty={q.difficulty}
               questionAction={this.questionAction(q.id)}
             />
