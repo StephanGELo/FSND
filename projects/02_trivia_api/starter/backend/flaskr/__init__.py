@@ -28,7 +28,7 @@ def create_app(test_config=None):
   '''
   @TODO: Set up CORS. Allow '*' for origins. Delete the sample route after completing the TODOs
   '''
-  CORS(app, resources={r"/api/*":{"origins": "*"}})
+  CORS(app)
   
   '''
   @TODO: Use the after_request decorator to set Access-Control-Allow
@@ -45,9 +45,12 @@ def create_app(test_config=None):
   '''
   @app.route('/categories', methods=['GET'])
   def get_categories():
-    categories = Category.query.order_by(Question.id).all()
+    categories = Category.query.all()
     formatted_categories = [category.format() for category in categories]
     
+    if len(formatted_categories) == 0:
+      abort(404)
+
     return jsonify({
       'success': True,
       'categories': formatted_categories
@@ -70,7 +73,10 @@ def create_app(test_config=None):
     questions = Question.query.order_by(Question.id).all()
     current_questions = paginate_questions(request, questions)
     num_of_questions = len(questions)
-    
+
+    if len(current_questions) == 0:
+      abort (404)
+
     categories = Category.query.all()
     formatted_categories = [category.format() for category in categories]
     
@@ -129,7 +135,7 @@ def create_app(test_config=None):
     new_answer = body.get('answer', None)
     new_category = body.get('category', None)
     new_difficulty = body.get('difficulty', None)
-
+    
     try:
       question = Question(question=new_question, answer=new_answer, category=new_category, difficulty=new_difficulty)
       question.insert()
@@ -225,7 +231,7 @@ def create_app(test_config=None):
       "success": False,
       "error": 405,
       "message": "Method Not Allowed"
-    })
+    }), 405
 
   @app.errorhandler(422)
   def unprocessable(error):
