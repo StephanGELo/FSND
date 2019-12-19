@@ -77,20 +77,20 @@ def create_app(test_config=None):
     if len(current_questions) == 0:
       abort (404)
     
-    current_category_ids = [q['category'] for q in current_questions]
-    current_category_types = [Category.query.get(id).format()['type'] for id in current_category_ids]
+    # current_category_ids = [q['category'] for q in current_questions]
+    # current_category_types = [Category.query.get(id).format()['type'] for id in current_category_ids]
    
     categories = Category.query.all()
     formatted_categories = [category.format() for category in categories]
     
-    for t in current_category_types:
-      return jsonify({
-        'success': True,
-        'questions': current_questions,
-        'total_questions': num_of_questions,
-        'categories': formatted_categories,
-        'current_category': [t]
-      })
+    # for t in current_category_types:
+    return jsonify({
+      'success': True,
+      'questions': current_questions,
+      'total_questions': num_of_questions,
+      'categories': formatted_categories,
+      'current_category': ''
+    })
 
 
   '''
@@ -166,19 +166,30 @@ def create_app(test_config=None):
   only question that include that string within their question. 
   Try using the word "title" to start. 
   '''
-  @app.route('/questions', methods=['POST'])
+  @app.route('/questions/search', methods=['POST'])
   def search_questions():
     body = request.get_json()
-    search = body.get('searchTerm', None)
+    search_term = body.get('searchTerm', None)
+    # questions = Question.query.filter(Question.question.ilike(f'%{search_term}%')).all()
+    # formatted_questions = [question.format() for question in questions]
+    # num_of_questions = len(formatted_questions)
+    
+    # return jsonify({
+    #   'success': True,
+    #   'questions': formatted_questions,
+    #   'total_questions': num_of_questions,
+    #   'current_category': ''
+    # })
 
     try:
-      if search:
-        questions = Question.query.order_by(Question.id).filter(Question.question.ilike('%{}%'.format(searchTerm)))
+      if search_term:
+    #     questions = Question.query.order_by(Question.id).all().filter(Question.question.ilike('%{}%'.format(searchTerm)))
+        questions = Question.query.filter(Question.question.ilike(f'%{search_term}%')).all()
         current_questions = paginate_questions(request, questions)
         num_of_questions = len(questions)
 
         return jsonify({
-          "success": True,
+          'success': True,
           'questions': current_questions,
           'total_questions': num_of_questions,
           'current_category': ''
@@ -187,8 +198,7 @@ def create_app(test_config=None):
         abort(404)
     except:
       abort(422)
-
-
+  
   '''
   @TODO: 
   Create a GET endpoint to get questions based on category. 
@@ -228,15 +238,102 @@ def create_app(test_config=None):
   '''
   @app.route('/quizzes', methods=['POST'])
   def get_quiz_question():
-    data = request.get_json()
-    previous_questions = data['previous_questions']
-    quiz_category = data['quiz_category']
-    print(previous_questions, quiz_category)
+    body = request.get_json()
+    previous_questions = body['previous_questions']
+    # print ("on line 243", previous_questions)
+    quiz_category = body['quiz_category']
+    
+    # print(quiz_category)
 
-    return jsonify({
-      "success": True
-    })
+    try:
+      
+      #Select a random question if a category has been selected
+      if quiz_category['id'] > 0:
+        selected_question = []
+        questions = Question.query.filter(Question.category==str(quiz_category['id'])).all()
+        formatted_questions = [question.format() for question in questions]
 
+        selected_question = random.choice(formatted_questions)
+    
+        if selected_question['question'] == None or selected_question['id'] in previous_questions:
+          selected_question = random.choice(formatted_questions)
+
+        previous_questions.append(selected_question)
+        
+        return jsonify({
+          "success": True,
+          "question": selected_question,
+          "previous_questions": previous_questions
+        })
+
+
+
+        # print(formatted_questions)
+        
+                                          # selected_question = random.choice(formatted_questions)
+                                          # print("on line 258, selected quest= ", selected_question, ">>>")
+
+                                          
+                                          # #Checking whether there is any previous questions
+                                          # if len(previous_questions) == 0:
+                                          #   #if no, add the selected question
+                                          #   return jsonify({
+                                          #     "success": True,
+                                          #     "question": selected_question,
+                                          #     "previous_questions": previous_questions.append(selected_question)
+                                          #   })
+                                          # # Otherwise, check whether the selected question exists in previous questions
+                                          # else:
+                                          #   # while not len(previous_questions) == len(formatted_questions):
+                                          #   # print ("on line 271 prev_questions:", previous_questions, len(previous_questions))
+                                          #   # print ("on line 272, formatted questions", formatted_questions, len(formatted_questions))
+                                          #   # for q in previous_questions:
+                                          #   # print("on line 274, you are again here", q)
+                                          #   #Checking if selection question DOES NOT exist in previous question
+                                          #   if selected_question['id'] in previous_questions:
+                                          #     selected_question = random.choice(formatted_questions)
+                                          #     print("on line 279, selected quest= ", selected_question, ">>>")
+                                          #   else:
+                                          #     previous_questions.append(selected_question)
+                                          #     # print(previous_questions)
+                                          #     return jsonify({
+                                          #       "success": True,
+                                          #       "question": selected_question,
+                                          #       "previous_questions": previous_questions
+                                          #     })
+                                          #   # #If it exists, get another quiz question
+                                          #   # return jsonify({
+                                          #   #   'question': {
+                                          #   #     'question': 'bey buddy',
+                                          #   #     'answer': 'poouff',
+                                          #   #     'id': 100
+                                          #   #   }
+                                          #   # })
+                                          # return jsonify({
+                                          #   "question": ["Please select a different Category"]
+                                          # })
+              
+      #Select a random question if 'All' has been clicked
+      else:
+        selected_question = []
+        questions = Question.query.all()
+        formatted_questions = [question.format() for question in questions]
+        # print(formatted_questions)
+        selected_question = random.choice(formatted_questions)
+    
+        while selected_question['question'] == None or selected_question['id'] in previous_questions:
+          selected_question = random.choice(formatted_questions)
+
+        previous_questions.append(selected_question)
+        # print(previous_questions)
+        return jsonify({
+          "success": True,
+          "question": selected_question,
+          "previous_questions": previous_questions
+        })
+    except:
+      abort(404)
+      
 
   '''
   @TODO: 
