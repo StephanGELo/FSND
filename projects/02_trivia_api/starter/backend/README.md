@@ -371,7 +371,7 @@ GET '/categories'
   }
 ```
 
-#### GET '/categories/<int:category_id>/questions'
+#### GET '/categories/{category_id}/questions'
 - General:
   - Fetches all questions corresponding to a particular category.
   - Request Arguments: A category id.
@@ -434,7 +434,7 @@ GET '/categories'
   }
 ```
 - Game Play Mechanics
-  - When a specific category id( 1 to 6) is selected when playing the quiz, the final score will be given based on the number of questions available in the specific category. If 'All' categories are selected for the quiz, then the final score will be given after a set of 5 questions have been answered.
+  - When a specific category id( 1 to 6) is selected when playing the quiz, the final score will be given after all the questions in the category has been answered(for now, each category has less than 5 questions). For example, if there are only 3 questions in the Category of Arts, then the final score will appear right after all the questions have been answered. If 'All' categories are selected for the quiz, then the final score will be given after a set of 5 questions have been answered.
 
 ## Testing
 To run the tests, run
