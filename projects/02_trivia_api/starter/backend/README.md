@@ -98,35 +98,35 @@ GET '/categories'
 
 - Sample: ``` curl http://127.0.0.1:5000/categories ```
 ```
- {
-  "categories": [
-    {
-      "id": 1, 
-      "type": "Science"
-    }, 
-    {
-      "id": 2, 
-      "type": "Art"
-    }, 
-    {
-      "id": 3, 
-      "type": "Geography"
-    }, 
-    {
-      "id": 4, 
-      "type": "History"
-    }, 
-    {
-      "id": 5, 
-      "type": "Entertainment"
-    }, 
-    {
-      "id": 6, 
-      "type": "Sports"
-    }
-  ], 
-  "success": true
-}
+  {
+    "categories": [
+      {
+        "id": 1, 
+        "type": "Science"
+      }, 
+      {
+        "id": 2, 
+        "type": "Art"
+      }, 
+      {
+        "id": 3, 
+        "type": "Geography"
+      }, 
+      {
+        "id": 4, 
+        "type": "History"
+      }, 
+      {
+        "id": 5, 
+        "type": "Entertainment"
+      }, 
+      {
+        "id": 6, 
+        "type": "Sports"
+      }
+    ], 
+    "success": true
+  }
 
 ```
 
@@ -134,143 +134,307 @@ GET '/categories'
 - General: 
   - Retrieve a dictionary of questions in which the keys are the id, the question, the answer, the difficulty and the category of each question.
   - Retrieve a dictionary of categories in which the key is the id and the value is the corresponding string of the category
-  Request Arguments: Page number
+  - Request Arguments: Page number
   - Returns a list of questions, a list of categories, the total number of questions, the current category and a succcess value.
   - Results are paginated in groups of 10.
 - Sample: ``` curl http://127.0.0.1:5000/questions  ```
 ```
-{
-  "categories": [
-    {
-      "id": 1, 
-      "type": "Science"
-    }, 
-    {
-      "id": 2, 
-      "type": "Art"
-    }, 
-    {
-      "id": 3, 
-      "type": "Geography"
-    }, 
-    {
-      "id": 4, 
-      "type": "History"
-    }, 
-    {
-      "id": 5, 
-      "type": "Entertainment"
-    }, 
-    {
-      "id": 6, 
-      "type": "Sports"
-    }
-  ], 
-  "current_category": "", 
-  "questions": [
-    {
-      "answer": "Apollo 13", 
-      "category": 5, 
-      "difficulty": 4, 
-      "id": 2, 
-      "question": "What movie earned Tom Hanks his third straight Oscar nomination, in 1996?"
-    }, 
-    {
-      "answer": "Tom Cruise", 
-      "category": 5, 
-      "difficulty": 4, 
-      "id": 4, 
-      "question": "What actor did author Anne Rice first denounce, then praise in the role of her beloved Lestat?"
-    }, 
-    {
-      "answer": "Maya Angelou", 
-      "category": 4, 
-      "difficulty": 2, 
-      "id": 5, 
-      "question": "Whose autobiography is entitled 'I Know Why the Caged Bird Sings'?"
-    }, 
-    {
-      "answer": "Edward Scissorhands", 
-      "category": 5, 
-      "difficulty": 3, 
-      "id": 6, 
-      "question": "What was the title of the 1990 fantasy directed by Tim Burton about a young man with multi-bladed appendages?"
-    }, 
-    {
-      "answer": "Muhammad Ali", 
-      "category": 4, 
-      "difficulty": 1, 
-      "id": 9, 
-      "question": "What boxer's original name is Cassius Clay?"
-    }, 
-    {
-      "answer": "Brazil", 
-      "category": 6, 
-      "difficulty": 3, 
-      "id": 10, 
-      "question": "Which is the only team to play in every soccer World Cup tournament?"
-    }, 
-    {
-      "answer": "Uruguay", 
-      "category": 6, 
-      "difficulty": 4, 
-      "id": 11, 
-      "question": "Which country won the first ever soccer World Cup in 1930?"
-    }, 
-    {
-      "answer": "George Washington Carver", 
-      "category": 4, 
-      "difficulty": 2, 
-      "id": 12, 
-      "question": "Who invented Peanut Butter?"
-    }, 
-    {
-      "answer": "Lake Victoria", 
-      "category": 3, 
-      "difficulty": 2, 
-      "id": 13, 
-      "question": "What is the largest lake in Africa?"
-    }, 
-    {
-      "answer": "The Palace of Versailles", 
-      "category": 3, 
-      "difficulty": 3, 
-      "id": 14, 
-      "question": "In which royal palace would you find the Hall of Mirrors?"
-    }
-  ], 
-  "success": true, 
-  "total_questions": 20
-}
+  {
+    "categories": [
+      {
+        "id": 1, 
+        "type": "Science"
+      }, 
+      {
+        "id": 2, 
+        "type": "Art"
+      }, 
+      {
+        "id": 3, 
+        "type": "Geography"
+      }, 
+      {
+        "id": 4, 
+        "type": "History"
+      }, 
+      {
+        "id": 5, 
+        "type": "Entertainment"
+      }, 
+      {
+        "id": 6, 
+        "type": "Sports"
+      }
+    ], 
+    "current_category": "", 
+    "questions": [
+      {
+        "answer": "Apollo 13", 
+        "category": 5, 
+        "difficulty": 4, 
+        "id": 2, 
+        "question": "What movie earned Tom Hanks his third straight Oscar nomination, in 1996?"
+      }, 
+      {
+        "answer": "Tom Cruise", 
+        "category": 5, 
+        "difficulty": 4, 
+        "id": 4, 
+        "question": "What actor did author Anne Rice first denounce, then praise in the role of her beloved Lestat?"
+      }, 
+      {
+        "answer": "Maya Angelou", 
+        "category": 4, 
+        "difficulty": 2, 
+        "id": 5, 
+        "question": "Whose autobiography is entitled 'I Know Why the Caged Bird Sings'?"
+      }, 
+      {
+        "answer": "Edward Scissorhands", 
+        "category": 5, 
+        "difficulty": 3, 
+        "id": 6, 
+        "question": "What was the title of the 1990 fantasy directed by Tim Burton about a young man with multi-bladed appendages?"
+      }, 
+      {
+        "answer": "Muhammad Ali", 
+        "category": 4, 
+        "difficulty": 1, 
+        "id": 9, 
+        "question": "What boxer's original name is Cassius Clay?"
+      }, 
+      {
+        "answer": "Brazil", 
+        "category": 6, 
+        "difficulty": 3, 
+        "id": 10, 
+        "question": "Which is the only team to play in every soccer World Cup tournament?"
+      }, 
+      {
+        "answer": "Uruguay", 
+        "category": 6, 
+        "difficulty": 4, 
+        "id": 11, 
+        "question": "Which country won the first ever soccer World Cup in 1930?"
+      }, 
+      {
+        "answer": "George Washington Carver", 
+        "category": 4, 
+        "difficulty": 2, 
+        "id": 12, 
+        "question": "Who invented Peanut Butter?"
+      }, 
+      {
+        "answer": "Lake Victoria", 
+        "category": 3, 
+        "difficulty": 2, 
+        "id": 13, 
+        "question": "What is the largest lake in Africa?"
+      }, 
+      {
+        "answer": "The Palace of Versailles", 
+        "category": 3, 
+        "difficulty": 3, 
+        "id": 14, 
+        "question": "In which royal palace would you find the Hall of Mirrors?"
+      }
+    ], 
+    "success": true, 
+    "total_questions": 19
+  }
 
 ```
-#### DELETE '/questions/<int:question_id>'
+#### DELETE '/questions/{question_id}'
 - General:
-- Sample:
+  - Deletes a question given a specific question id.
+  - Request Arguments: An integer corresponding to the question id to be deleted.
+  - Returns an object containing the corresponding question id deleted, a list of the updated questions after the required question has been deleted, the total questions remaining and a success value.
+- Sample: ``` curl -X DELETE 'http://127.0.0.1:5000/questions/14' ```
+```
+  {
+    "deleted": 14,
+    "questions": [
+      {
+        "answer": "Apollo 13",
+        "category": 5,
+        "difficulty": 4,
+        "id": 2,
+        "question": "What movie earned Tom Hanks his third straight Oscar nomination, in 1996?"
+      },
+      {
+        "answer": "Tom Cruise",
+        "category": 5,
+        "difficulty": 4,
+        "id": 4,
+        "question": "What actor did author Anne Rice first denounce, then praise in the role of her beloved Lestat?"
+      },
+      {
+        "answer": "Maya Angelou",
+        "category": 4,
+        "difficulty": 2,
+        "id": 5,
+        "question": "Whose autobiography is entitled 'I Know Why the Caged Bird Sings'?"
+      },
+      {
+        "answer": "Edward Scissorhands",
+        "category": 5,
+        "difficulty": 3,
+        "id": 6,
+        "question": "What was the title of the 1990 fantasy directed by Tim Burton about a young man with multi-bladed appendages?"
+      },
+      {
+        "answer": "Muhammad Ali",
+        "category": 4,
+        "difficulty": 1,
+        "id": 9,
+        "question": "What boxer's original name is Cassius Clay?"
+      },
+      {
+        "answer": "Brazil",
+        "category": 6,
+        "difficulty": 3,
+        "id": 10,
+        "question": "Which is the only team to play in every soccer World Cup tournament?"
+      },
+      {
+        "answer": "Uruguay",
+        "category": 6,
+        "difficulty": 4,
+        "id": 11,
+        "question": "Which country won the first ever soccer World Cup in 1930?"
+      },
+      {
+        "answer": "George Washington Carver",
+        "category": 4,
+        "difficulty": 2,
+        "id": 12,
+        "question": "Who invented Peanut Butter?"
+      },
+      {
+        "answer": "Lake Victoria",
+        "category": 3,
+        "difficulty": 2,
+        "id": 13,
+        "question": "What is the largest lake in Africa?"
+      },
+      {
+        "answer": "Agra",
+        "category": 3,
+        "difficulty": 2,
+        "id": 15,
+        "question": "The Taj Mahal is located in which Indian city?"
+      }
+    ],
+    "success": true,
+    "total_questions": 18
+  }
+
+```
+
 
 #### POST '/questions'
-- General:
-- Sample:
-
+- General: 
+  - Adds a new question with the corresponding values for the answer, the difficulty level and the category.
+  - Request Arguments: a string of question, answer and category and  an integers for difficulty.
+  - Returns an object containing a success value.
+- Sample: ``` curl -X POST http://127.0.0.1:5000/questions -H 'Content-Type: application/json' -d '{"question":"What is science?", "answer": "Science", "difficulty":1, "category":"6"}' ```
+```
+  {"success":true}
+```
 #### POST '/questions/search'
 - General:
-- Sample:
+  - Searches for a question based on a given string of characters.
+  - Request Arguments: a string of characters
+  - Returns an object containing a list of questions which contains the search term , the current_category, a success value and the total questions. The list will have the values for the question, answer, the category and the difficulty.
+- Sample: ``` curl -X POST http://127.0.0.1:5000/questions/search -H 'Content-Type: application/json' -d '{"searchTerm":"soccer"}' ```
+```
+  {
+    "current_category": "",
+    "questions": [
+      {
+        "answer": "Brazil",
+        "category": 6,
+        "difficulty": 3,
+        "id": 10,
+        "question": "Which is the only team to play in every soccer World Cup tournament?"
+      },
+      {
+        "answer": "Uruguay",
+        "category": 6,
+        "difficulty": 4,
+        "id": 11,
+        "question": "Which country won the first ever soccer World Cup in 1930?"
+      }
+    ],
+    "success": true,
+    "total_questions": 2
+  }
+```
 
 #### GET '/categories/<int:category_id>/questions'
 - General:
-- Sample:
+  - Fetches all questions corresponding to a particular category.
+  - Request Arguments: A category id.
+  - Returns an object containing the current category and a list of questions with keys as id, question, answer, category, difficulty and their corresponding values.
+- Sample: ``` curl -X GET http://127.0.0.1:5000/categories/3/questions ```
+```
+  {
+    "current_category": [
+      "Geography"
+    ],
+    "questions": [
+      {
+        "answer": "Lake Victoria",
+        "category": 3,
+        "difficulty": 2,
+        "id": 13,
+        "question": "What is the largest lake in Africa?"
+      },
+      {
+        "answer": "Agra",
+        "category": 3,
+        "difficulty": 2,
+        "id": 15,
+        "question": "The Taj Mahal is located in which Indian city?"
+      }
+    ],
+    "success": true,
+    "total_questions": 2
+  }
+
+```  
 
 #### POST '/quizzes'
-- General:
-- Sample:
-
-
-
-
-    
-
-
-
+- General: 
+  - Get a random unique question based on a specific category or based on all categories.
+  - Request Arguments: Category Id (id = 0 for All) and a list of previous questions, if any.
+  - Returns a random question with the corresponding answer, category and difficulty within the given category and a list of previously.
+- Sample: ``` curl -X POST http://127.0.0.1:5000/quizzes -H 'Content-Type: application/json' -d '{"previous_questions": [1],"quiz_category": {"type": "click", "id": 0}}' ```
+```
+  {
+    "previous_questions": [
+      1,
+      {
+        "answer": "George Washington Carver",
+        "category": 4,
+        "difficulty": 2,
+        "id": 12,
+        "question": "Who invented Peanut Butter?"
+      }
+    ],
+    "question": {
+      "answer": "George Washington Carver",
+      "category": 4,
+      "difficulty": 2,
+      "id": 12,
+      "question": "Who invented Peanut Butter?"
+    },
+    "success": true,
+    "total_questions": 5
+  }
+```
+- Game Play Mechanics
+  - When a specific category id( 1 to 6) is selected when playing the quiz, the final score will be given based on the number of questions available in the specific category. If 'All' categories are selected for the quiz, then the final score will be given after a set of 5 questions have been answered.
 
 ## Testing
 To run the tests, run
