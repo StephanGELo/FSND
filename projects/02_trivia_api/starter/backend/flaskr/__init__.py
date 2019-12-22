@@ -76,9 +76,7 @@ def create_app(test_config=None):
     
     if len(current_questions) == 0:
       abort (404)
-    
-    # current_category_ids = [q['category'] for q in current_questions]
-    # current_category_types = [Category.query.get(id).format()['type'] for id in current_category_ids]
+
     categories = Category.query.all()
     formatted_categories = [category.format() for category in categories]
     
@@ -89,7 +87,6 @@ def create_app(test_config=None):
       'categories': formatted_categories,
       'current_category': ''
     })
-
 
   '''
   @TODO 5: 
@@ -155,6 +152,7 @@ def create_app(test_config=None):
     
     except:
       abort(422)
+
   '''
   @TODO 7: 
   Create a POST endpoint to get questions based on a search term. 
@@ -186,7 +184,7 @@ def create_app(test_config=None):
         abort(404)
     except:
       abort(422)
-  
+      
   '''
   @TODO 8: 
   Create a GET endpoint to get questions based on category. 
@@ -230,30 +228,49 @@ def create_app(test_config=None):
     quiz_category = body['quiz_category']
 
     try:
-      #Select a random question if a category has been selected
+      #Retrieve a random question if a category has been selected
       if quiz_category['id'] > 0:
-        selected_question = []
+        total_questions = 0
         questions = Question.query.filter(Question.category==str(quiz_category['id'])).all()
         formatted_questions = [question.format() for question in questions]
+        total_questions = len(formatted_questions)
         selected_question = random.choice(formatted_questions)
-        if selected_question['question'] == None or selected_question['id'] in previous_questions:
-          selected_question = random.choice(formatted_questions)
-        previous_questions.append(selected_question)
-        
-        return jsonify({
-          "success": True,
-          "question": selected_question,
-          "previous_questions": previous_questions
-        })
-              
-      #Select a random question if 'All' has been clicked
+       #Check if there is any previous question
+        if len(previous_questions) == 0:
+          return jsonify({
+            "success": True,
+            "question": selected_question,
+            "previous_questions": previous_questions.append(selected_question)
+          }) 
+        #Otherwise, check if selected question exists in previous questions
+        else:
+          while (selected_question['id'] in previous_questions):
+            formatted_questions.remove(selected_question)
+            selected_question = random.choice(formatted_questions)
+            #Condition to prevent a request error from ocurring
+            if len(formatted_questions) == 1:
+              return jsonify({
+                "success": True,
+                "question": selected_question,
+                "previous_questions": previous_questions,
+                "total_questions": total_questions
+              })
+          #If selected question does not exist in previous questions, append it and return it to the frontend
+          previous_questions.append(selected_question)
+          return jsonify({
+            "success": True,
+            "question": selected_question,
+            "previous_questions": previous_questions,
+            "total_questions": total_questions
+          })
+      #Retrieve a random question if All categories have been selected
       else:
         selected_question = []
         questions = Question.query.all()
         formatted_questions = [question.format() for question in questions]
         selected_question = random.choice(formatted_questions)
     
-        while selected_question['question'] == None or selected_question['id'] in previous_questions:
+        while selected_question['id'] in previous_questions:
           selected_question = random.choice(formatted_questions)
 
         previous_questions.append(selected_question)
@@ -261,12 +278,12 @@ def create_app(test_config=None):
         return jsonify({
           "success": True,
           "question": selected_question,
-          "previous_questions": previous_questions
+          "previous_questions": previous_questions,
+          "total_questions": 5
         })
     except:
       abort(404)
       
-
   '''
   @TODO 10: 
   Create error handlers for all expected errors 

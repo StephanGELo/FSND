@@ -26,12 +26,12 @@ class TriviaTestCase(unittest.TestCase):
         }
 
         self.quiz_question_category = {
-            'previous_questions': [],
+            'previous_questions': [1],
             'quiz_category': {'type': 'Sports', 'id': 6}
         }
 
         self.quiz_question_all = {
-            'previous_questions': [],
+            'previous_questions': [1],
             'quiz_category': {'type': 'click', 'id': 0}
         }
 

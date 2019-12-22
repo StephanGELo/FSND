@@ -16,7 +16,8 @@ class QuizView extends Component {
         numCorrect: 0,
         currentQuestion: {},
         guess: '',
-        forceEnd: false
+        forceEnd: false,
+        count: 0
     }
   }
 
@@ -66,7 +67,8 @@ class QuizView extends Component {
           previousQuestions: previousQuestions,
           currentQuestion: result.question,
           guess: '',
-          forceEnd: result.question ? false : true
+          forceEnd: result.question ? false : true,
+          count: result.total_questions
         })
         return;
       },
@@ -150,7 +152,7 @@ class QuizView extends Component {
   }
 
   renderPlay(){
-    return this.state.previousQuestions.length === questionsPerPlay || this.state.forceEnd
+    return this.state.previousQuestions.length  === this.state.count || this.state.forceEnd
       ? this.renderFinalScore()
       : this.state.showAnswer 
         ? this.renderCorrectAnswer()
