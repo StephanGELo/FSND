@@ -3,6 +3,7 @@ from flask import Flask, request, abort, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
 import random
+from random import randint, choice
 
 from models import setup_db, Question, Category
 
@@ -28,7 +29,7 @@ def create_app(test_config=None):
   '''
   @TODO 1: Set up CORS. Allow '*' for origins. Delete the sample route after completing the TODOs
   '''
-  CORS(app)
+  cors = CORS(app, resources={r"/api/*": {"origins": "*"}})
   
   '''
   @TODO 2: Use the after_request decorator to set Access-Control-Allow
@@ -222,6 +223,7 @@ def create_app(test_config=None):
   and shown whether they were correct or not. 
   '''
   @app.route('/quizzes', methods=['POST'])
+  #######Working Solution 1 #########
   def get_quiz_question():
     body = request.get_json()
     previous_questions = body['previous_questions']
@@ -279,10 +281,46 @@ def create_app(test_config=None):
           "success": True,
           "question": selected_question,
           "previous_questions": previous_questions,
-          "total_questions": 5
+          "total_questions": len(formatted_questions)- 1
         })
     except:
       abort(404)
+
+  ######### Working Solution 2 ##########
+  # def play_quiz():
+  #   body = request.get_json()
+  #   quiz_category = body.get('quiz_category')
+  #   previous_questions_ids = body.get('previous_questions', None)
+  #   print(previous_questions_ids)
+  #   if quiz_category['id'] > 0:
+  #     # questions = Question.query.filter(Question.category == strquiz_category['id']).all()
+  #     questions = Question.query.filter(Question.category==str(quiz_category['id'])).all()
+  #     formatted_questions = [q.format() for q in questions]
+  #     if previous_questions_ids:
+  #       random_num = choice([i for i in range(0, len(formatted_questions)) if i not in previous_questions_ids])
+  #       print("on line 299", formatted_questions[random_num])
+  #     else:
+  #       random_num = randint(0, len(formatted_questions) - 1)
+  #       print("on line 302", formatted_questions[random_num])
+  #     return jsonify ({
+  #       'success': True,
+  #       'total_questions': len(formatted_questions),
+  #       'question': formatted_questions[random_num],
+  #       'prev_questions': previous_questions_ids.append(formatted_questions[random_num])
+  #     })
+  #   else:
+  #     questions = Question.query.all()
+  #     formatted_questions = [q.format() for q in questions]
+  #     if previous_questions_ids:
+  #       random_num = choice([i for i in range(0, len(formatted_questions)-1) if i not in previous_questions_ids])
+  #     else:
+  #       random_num = randint(0, len(formatted_questions) - 1)
+  #     return jsonify ({
+  #       'success': True,
+  #       'total_questions': len(formatted_questions),
+  #       'question': formatted_questions[random_num],
+  #       'prev_questions': previous_questions_ids.append(formatted_questions[random_num])
+  #     })
       
   '''
   @TODO 10: 
