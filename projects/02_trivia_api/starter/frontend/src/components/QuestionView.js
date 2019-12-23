@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 
 import '../stylesheets/App.css';
+import '../stylesheets/Question.css';
 import Question from './Question';
 import Search from './Search';
 import $ from 'jquery';

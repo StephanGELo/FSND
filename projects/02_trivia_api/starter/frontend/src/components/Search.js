@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import '../stylesheets/Question.css';
 
 class Search extends Component {
   state = {
@@ -20,6 +21,7 @@ class Search extends Component {
     return (
       <form onSubmit={this.getInfo}>
         <input
+          className="search"
           placeholder="Search questions..."
           ref={input => this.search = input}
           onChange={this.handleInputChange}
